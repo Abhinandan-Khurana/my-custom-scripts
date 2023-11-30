@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo "FINDER:~"
+read -p "Enter the path where you want find: " find_path
 read -p "Enter the file name you want to find: " file_name
 
-find / -type f -name "$file_name" 2>/dev/null & pid=$! # Process Id of the previous running command
+find $find_path -type f -name "$file_name" 2>/dev/null & pid=$! # Process Id of the previous running command
 
 spin='-\|/'
 
