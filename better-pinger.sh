@@ -35,17 +35,21 @@ spinner() {
     sleep $delay
     printf "\r"
   done
+  echo -e "\n" # Add a newline after spinner
 }
 
 # Function to check host status
 check_host() {
   host=$1
   if ping -c 1 "$host" &> /dev/null; then
-    echo -e "\e[36m$host : \e[32mUP"
+    echo -e "\e[36m$host : \e[32mUP" >> "$results_file"
   else
-    echo -e "\e[37m$host : \e[31mDOWN"
+    echo -e "\e[37m$host : \e[31mDOWN" >> "$results_file"
   fi
 }
+
+# Temporary file to store results
+results_file=$(mktemp)
 
 # Array to hold process IDs of background tasks
 bg_pids=()
@@ -67,4 +71,6 @@ spinner "${bg_pids[@]}" &
 
 wait # Wait for all background processes to finish
 
-
+# Print the results
+cat "$results_file"
+rm "$results_file" # Clean up temporary file
