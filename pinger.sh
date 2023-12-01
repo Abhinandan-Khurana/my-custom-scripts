@@ -16,9 +16,13 @@ fi
 
 # Read hosts from the input file and check their status
 while IFS= read -r line; do
-  if ping -c 1 "$line" &> /dev/null; then
-    echo "$line : UP"
+  trimmed_line=$(echo "$line" | xargs) # Trim whitespace
+  if [[ -z "$trimmed_line" ]] || [[ "$trimmed_line" == \#* ]]; then
+    continue # Skip empty lines and comments
+  fi
+  if ping -c 1 "$trimmed_line" &> /dev/null; then
+    echo "$trimmed_line : UP"
   else
-    echo "$line : DOWN"
+    echo "$trimmed_line : DOWN"
   fi
 done < "$input_file"
