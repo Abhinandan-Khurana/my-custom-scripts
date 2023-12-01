@@ -21,8 +21,8 @@ while IFS= read -r line; do
     continue # Skip empty lines and comments
   fi
   if ping -c 1 "$trimmed_line" &> /dev/null; then
-    echo "$trimmed_line : \e[32mUP"
+    echo "\e[36m$trimmed_line : \e[32mUP"
   else
-    echo "$trimmed_line : \e[31mDOWN"
+    echo "\e[37m$trimmed_line : \e[31mDOWN"
   fi
 done < "$input_file"
