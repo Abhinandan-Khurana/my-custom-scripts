@@ -38,10 +38,10 @@ check_dns_with_nslookup() {
 # Function to decide which DNS tool to use
 check_dns() {
     host=$1
-    if command -v dig > /dev/null; then
-        check_dns_with_dig "$host"
-    else
+    if command -v nslookup > /dev/null; then
         check_dns_with_nslookup "$host"
+    else
+        check_dns_with_dig "$host"
     fi
 }
 
