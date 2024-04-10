@@ -30,7 +30,7 @@ spinner() {
       break
     fi
     local temp=${spinstr#?}
-    printf " \e[33m[%c]  " "$spinstr"
+    printf " \033[0;33m[%c]  " "$spinstr"
     local spinstr=$temp${spinstr%"$temp"}
     sleep $delay
     printf "\r"
@@ -42,9 +42,9 @@ spinner() {
 check_host() {
   host=$1
   if ping -c 1 "$host" &> /dev/null; then
-    echo -e "\e[36m$host : \e[32mUP" >> "$results_file"
+    echo -e "\033[0;36m$host : \033[0;32mUP" >> "$results_file"
   else
-    echo -e "\e[37m$host : \e[31mDOWN" >> "$results_file"
+    echo -e "\033[0;37m$host : \033[0;31mDOWN" >> "$results_file"
   fi
 }
 
