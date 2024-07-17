@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 2 ]; then
   echo "Usage: $0 <domain list> <output format (txt|csv)>"
-  echo "Example: check_ssl_expiry.sh domain_list.txt csv"
+  echo "Example: $0 domain_list.txt csv"
   exit 1
 fi
 
@@ -54,6 +54,6 @@ while IFS= read -r domain; do
   else
     echo "$domain,$expiry_date" >>"$output_file"
   fi
-done <"$domain_url_list"
+done <"$domain_list"
 
 echo "Results have been saved to $output_file"
