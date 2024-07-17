@@ -1,0 +1,2 @@
+> sed -nE 's|(http[s]?://[a-zA-Z0-9.-]+) › (.+)|\1/\2|p' g_dork.page | tee temp.txt
+> grep -oE '(http|https)://[a-zA-Z0-9.-]+(/[a-zA-Z0-9._~:/?#@!$&'\''()*+,;=%-]*)?' temp.txt > g_drk.txt
