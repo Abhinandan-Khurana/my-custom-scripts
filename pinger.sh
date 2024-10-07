@@ -10,7 +10,7 @@ input_file="$1"
 
 # Check if the input file exists
 if [ ! -f "$input_file" ]; then
-  echo "Input file '$input_file' does not exist."
+  echo "Error: Input file '$input_file' does not exist."
   exit 1
 fi
 
@@ -20,9 +20,13 @@ while IFS= read -r line; do
   if [[ -z "$trimmed_line" ]] || [[ "$trimmed_line" == \#* ]]; then
     continue # Skip empty lines and comments
   fi
-  if ping -c 1 "$trimmed_line" &> /dev/null; then
-    echo "\e[36m$trimmed_line : \e[32mUP"
+
+  # Extract the domain name by removing protocol (http:// or https://)
+  domain=$(echo "$trimmed_line" | sed -E 's|https?://||')
+
+  if ping -c 1 "$domain" &>/dev/null; then
+    echo -e "\033[36m$trimmed_line : \033[32mUP\033[0m"
   else
-    echo "\e[37m$trimmed_line : \e[31mDOWN"
+    echo -e "\033[37m$trimmed_line : \033[31mDOWN\033[0m"
   fi
-done < "$input_file"
+done <"$input_file"
